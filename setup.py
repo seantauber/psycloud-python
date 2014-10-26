@@ -7,5 +7,5 @@ setup(name='psycloud',
       author='Sean Tauber',
       author_email='seanetauber@gmail.com',
       license='MIT',
-      packages=['psycloud'],
+      packages=['psycloud-python'],
       zip_safe=False)
