@@ -47,15 +47,15 @@ class PsycloudAdminClient():
 		else:
 			raise Exception(r.text)
 
-	def create_iterated_experiment(self, experiment_name, num_participants, config_dict=None, config_json_filename=None):
+	def create_iterated_experiment(self, experiment_name, num_participants, config_dict=None, config_json_file=None):
 		
 		url = self.base_url + self.endpoint['experiments']
 
 		if config_dict is not None:
 			config = config_dict
 		
-		elif config_json_filename is not None:
-			f = open(config_json_filename, 'rb')
+		elif config_json_file is not None:
+			f = open(config_json_file, 'rb')
 			config = json.load(f)
 			f.close()
 
@@ -71,7 +71,7 @@ class PsycloudAdminClient():
 		else:
 			raise Exception(r.text)
 
-	def create_experiment_with_participants(self, experiment_name, participant_dict=None, participant_json_filename=None):
+	def create_experiment_with_participants(self, experiment_name, participant_dict=None, json_file=None):
 		'''
 		Assumes a dictionary or json file is passed and has key 'participants' with a value that is
 		a list of participants which each include a stimuli list and a participant_index.
@@ -82,8 +82,8 @@ class PsycloudAdminClient():
 		if participant_dict is not None:
 			data = participant_dict
 		
-		elif participant_json_filename is not None:
-			f = open(participant_json_filename, 'rb')
+		elif json_file is not None:
+			f = open(json_file, 'rb')
 			data = json.load(f)
 			f.close()
 
@@ -180,10 +180,10 @@ class PsycloudClient():
 		r = requests.post(url, data=json.dumps(data), headers=JSON_HEADER)
 		if r.ok:
 			return r.json()['result']['participant_id']
-		elif r.status == 409:
+		elif r.status_code == 409:
 			# Duplicate registratin error
 			raise DuplicateEntryError()
-		elif r.status == 410:
+		elif r.status_code == 410:
 			# Experiment full error
 			raise ResourceError()
 		else:
