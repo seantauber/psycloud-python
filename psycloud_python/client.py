@@ -47,8 +47,18 @@ class PsycloudAdminClient():
 		else:
 			raise Exception(r.text)
 
-	def create_iterated_experiment(self, experiment_name, num_participants, config):
+	def create_iterated_experiment(self, experiment_name, num_participants, config_dict=None, config_json_filename=None):
+		
 		url = self.base_url + self.endpoint['experiments']
+
+		if config_dict is not None:
+			config = config_dict
+		
+		elif config_json_filename is not None:
+			f = open(config_json_filename, 'rb')
+			config = json.load(f)
+			f.close()
+
 		data = {
 		'experiment_type': 'iterated',
 		'experiment_name': experiment_name,
@@ -61,14 +71,24 @@ class PsycloudAdminClient():
 		else:
 			raise Exception(r.text)
 
-	def upload_data(self, data_dict=None, json_filename=None):
-		url = self.base_url + self.endpoint['experiment_upload']
-		if data_dict is not None:
-			data = data_dict
-		elif json_filename is not None:
-			f = open(json_filename, 'rb')
+	def create_experiment_with_participants(self, experiment_name, participant_dict=None, participant_json_filename=None):
+		'''
+		Assumes a dictionary or json file is passed and has key 'participants' with a value that is
+		a list of participants which each include a stimuli list and a participant_index.
+		'''
+
+		url = self.base_url + self.endpoint['experiments']
+		
+		if participant_dict is not None:
+			data = participant_dict
+		
+		elif participant_json_filename is not None:
+			f = open(participant_json_filename, 'rb')
 			data = json.load(f)
 			f.close()
+
+		data['experiment_name'] = experiment_name
+
 		r = requests.post(url, data=json.dumps(data), headers=JSON_HEADER, auth=(self.username, self.password))
 		if r.ok:
 			return r.json()['result']['experiment_id']
