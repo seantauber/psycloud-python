@@ -1,6 +1,7 @@
 """Psycloud Python Client"""
 import requests
 import json
+from custom_exceptions import DuplicateEntryError, ResourceError
 
 
 JSON_HEADER = {'content-type': 'application/json'}
@@ -159,6 +160,12 @@ class PsycloudClient():
 		r = requests.post(url, data=json.dumps(data), headers=JSON_HEADER)
 		if r.ok:
 			return r.json()['result']['participant_id']
+		elif r.status == 409:
+			# Duplicate registratin error
+			raise DuplicateEntryError()
+		elif r.status == 410:
+			# Experiment full error
+			raise ResourceError()
 		else:
 			raise Exception(r.text)
 
