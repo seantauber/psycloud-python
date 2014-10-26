@@ -1,0 +1,31 @@
+{
+	"max_chain_depth": 100,
+	"max_parallel_chains": 2,
+	"chains":
+		[
+			{
+				"chain_type": "people",
+				"seeds":
+					[
+						{"name": "Abbot"},
+						{"name": "Obama"}
+					]
+			},
+			{
+				"chain_type": "places",
+				"seeds":
+					[
+						{"city": "Adelaide", "country": "AU"},
+						{"name": "New York", "country": "US"}
+					]
+			},
+			{
+				"chain_type": "things",
+				"seeds":
+					[
+						{"animal": "Kangaroo"},
+						{"animal": "Eagle"}
+					]
+			}
+		]
+}

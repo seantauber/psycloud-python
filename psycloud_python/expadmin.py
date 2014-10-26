@@ -1,5 +1,5 @@
 import sys
-from psycloud.utils import PsycloudJsonResultsReader
+from utils import PsycloudJsonResultsReader
 import pandas as pd
 
 
@@ -12,7 +12,7 @@ def json_results_to_csv(args):
 
 
 commands = {}
-commands['json_results_to_csv'] = json2csv
+commands['json_results_to_csv'] = json_results_to_csv
 
 
 if __name__ == "__main__":
