@@ -1,6 +1,4 @@
 {
-    "experiment_name": "seeing-scenes",
-    "num_participants": 100,
     "participants": [
         {
             "stimuli_count": 49,

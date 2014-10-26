@@ -14820,7 +14820,5 @@
             ], 
             "participant_index": 34
         }
-    ], 
-    "num_participants": 190, 
-    "experiment_name": "mammals-generalization-test02"
+    ]
 }

@@ -1,6 +1,4 @@
 {
-    "experiment_name": "coincidences-psychic-chickens",
-    "num_participants": 200,
     "participants": [
         {
             "stimuli_count": 2,
